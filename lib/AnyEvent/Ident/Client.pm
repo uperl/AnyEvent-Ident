@@ -154,7 +154,7 @@ sub ident
 
 =head2 $client-E<gt>close
 
-Close the connection to the ident server.  Requests that are in will
+Close the connection to the ident server.  Requests that are in progress will
 recieve an error response with the type C<UNKNOWN-ERROR>.
 
 =cut
