@@ -112,7 +112,7 @@ sub ident
   
   tcp_connect $self->{hostname}, $self->{port}, sub {
     my($fh) = @_;
-    return $self->{on_error}->("unable to connect: $!") unless $fh;
+    return $self->_cleanup->{on_error}->("unable to connect: $!") unless $fh;
     
     $self->{handle} = AnyEvent::Handle->new(
       fh       => $fh,
@@ -167,6 +167,7 @@ sub _cleanup
     $_->(AnyEvent::Ident::Response->new("$1,$2:ERROR:UNKNOWN-ERROR"))
       for @{ $self->{$key} };
   }
+  $self;
 }
 
 sub close
