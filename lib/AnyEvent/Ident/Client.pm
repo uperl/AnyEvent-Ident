@@ -49,12 +49,6 @@ The port to connect to.
 
 =item *
 
-timeout (default 60)
-
-The connection timeout.
-
-=item *
-
 on_error (carp error)
 
 A callback subref to be called on error (either connection or transmission error).
@@ -71,7 +65,6 @@ sub new
   bless { 
     hostname => $args->{hostname} // '127.0.0.1',  
     port     => $args->{port}     // 113,
-    timeout  => $args->{timeout}  // 60,
     on_error => $args->{on_error} // sub { carp $_[0] },
   }, $class;
 }
@@ -126,10 +119,12 @@ sub ident
       on_error => sub {
         my ($hdl, $fatal, $msg) = @_;
         $self->{on_error}->($msg);
+        $self->_cleanup;
         $_[0]->destroy;
         delete $self->{handle};
       },
       on_eof   => sub {
+        $self->_cleanup;
         $self->{handle}->destroy;
        delete $self->{handle};
       },
@@ -159,16 +154,27 @@ sub ident
 
 =head2 $client-E<gt>close
 
-Close the connection to the ident server.  Requests that are in progress
-will be lost.
+Close the connection to the ident server.  Requests that are in will
+recieve an error response with the type C<UNKNOWN-ERROR>.
 
 =cut
+
+sub _cleanup
+{
+  my $self = shift;
+  foreach my $key (grep /^(\d+):(\d+)$/, keys %$self)
+  {
+    $_->(AnyEvent::Ident::Response->new("$1,$2:ERROR:UNKNOWN-ERROR")
+      for @{ $self->{$key} };
+  }
+}
 
 sub close
 {
   my $self = shift;
   if(defined $self->{handle})
   {
+    $self->_cleanup;
     $self->{handle}->destroy;
     delete $self->{handle};
     delete $self->{wait};
