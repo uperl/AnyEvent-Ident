@@ -9,4 +9,11 @@ use v5.10;
 
 # http://tools.ietf.org/html/rfc1413
 
+=head1 SEE ALSO
+
+L<AnyEvent::Ident::Client>,
+L<AnyEvent::Ident::Server>
+
+=cut
+
 1;

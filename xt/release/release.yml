@@ -1,1 +1,10 @@
---- {}
+---
+pod_spelling_system:
+  stopwords:
+    - hostname
+    - TCP
+    - ident
+
+pod_coverage:
+  private:
+    - AnyEvent::Ident.*#new
