@@ -6,6 +6,11 @@ AnyEvent::Ident - Simple asynchromous ident client and server
 
 version 0.01
 
+=head1 SEE ALSO
+
+L<AnyEvent::Ident::Client>,
+L<AnyEvent::Ident::Server>
+
 =head1 AUTHOR
 
 Graham Ollis <plicease@cpan.org>
