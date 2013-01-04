@@ -17,6 +17,8 @@ sub new
     my $raw = $self->{raw} = shift;
     if($raw =~ /^\s*(\d+)\s*,\s*(\d+)\s*$/)
     {
+      croak "invalid port" if $1 == 0    || $2 == 0
+      ||                      $1 > 65535 || $2 > 65535;
       ($self->{server_port}, $self->{client_port}) = ($1, $2);
     }
     else

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use v5.10;
-use Test::More tests => 19;
+use Test::More tests => 25;
 use AnyEvent::Ident::Client;
 use AnyEvent::Ident::Server;
 
@@ -71,6 +71,40 @@ do {
   my $res;
   
   $client->ident(-1, -1, sub {
+    $res = shift;
+    $done->send;
+  });
+  
+  $done->recv;
+  
+  isa_ok $res, 'AnyEvent::Ident::Response';
+  ok !$res->is_success, '!is_success';
+  is $res->error_type, 'INVALID-PORT', 'error_type = INVALID-PORT';
+};
+
+do {
+  my $done = AnyEvent->condvar;
+  
+  my $res;
+  
+  $client->ident(65536, 42, sub {
+    $res = shift;
+    $done->send;
+  });
+  
+  $done->recv;
+  
+  isa_ok $res, 'AnyEvent::Ident::Response';
+  ok !$res->is_success, '!is_success';
+  is $res->error_type, 'INVALID-PORT', 'error_type = INVALID-PORT';
+};
+
+do {
+  my $done = AnyEvent->condvar;
+  
+  my $res;
+  
+  $client->ident(42, 65536, sub {
     $res = shift;
     $done->send;
   });
