@@ -8,14 +8,14 @@ use AnyEvent::Handle;
 use Carp qw( carp );
 use AnyEvent::Ident::Response;
 
-# ABSTRACT: Simple asynchromous ident client
+# ABSTRACT: Simple asynchronous ident client
 # VERSION
 
 =head1 SYNOPSIS
 
  use AnyEvent::Ident::Client;
  
- my $client = AnyEvent::Ident::Client->new;
+ my $client = AnyEvent::Ident::Client->new( hostname => 127.0.0.1' );
  $client->ident($server_port, $client_port, sub {
    my($res) = @_; # isa AnyEvent::Client::Response 
    if($res->is_success)

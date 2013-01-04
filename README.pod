@@ -1,6 +1,6 @@
 =head1 NAME
 
-AnyEvent::Ident - Simple asynchromous ident client and server
+AnyEvent::Ident - Simple asynchronous ident client and server
 
 =head1 VERSION
 

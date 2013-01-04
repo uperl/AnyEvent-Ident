@@ -5,7 +5,7 @@ use warnings;
 use v5.10;
 use Carp qw( croak );
 
-# ABSTRACT: Simple asynchromous ident response
+# ABSTRACT: Simple asynchronous ident response
 # VERSION
 
 sub new

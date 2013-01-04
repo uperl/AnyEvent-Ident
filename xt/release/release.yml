@@ -4,6 +4,7 @@ pod_spelling_system:
     - hostname
     - TCP
     - ident
+    - IP
 
 pod_coverage:
   private:
