@@ -5,6 +5,7 @@ pod_spelling_system:
     - TCP
     - ident
     - IP
+    - MSWin32
 
 pod_coverage:
   private:

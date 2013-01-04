@@ -96,6 +96,34 @@ sub ident_client
     ->ident(@_);
 }
 
+=head1 WHY
+
+Why use this distribution instead of L<Net::Ident>?
+
+=over 4
+
+=item *
+
+Works under Windows (MSWin32)
+
+L<Net::Ident> installs (even passing its tests) on Windows, but it does not work.
+It may not work in some UNIX environments depending on your headers and libraries.
+
+=item *
+
+Works with L<AnyEvent>
+
+This distribution will work with any event loop supported by L<AnyEvent>.
+
+=item *
+
+Server Included
+
+This distribution comes with a server, which is handy for testing (take a
+peek at the test suite for L<Mojolicious::Plugin::Ident> to see what I mean.
+
+=back
+
 =head1 SEE ALSO
 
 L<RFC1413|http://tools.ietf.org/html/rfc1413>,
