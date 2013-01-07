@@ -9,7 +9,7 @@ use AnyEvent::Handle;
 use AnyEvent::Ident::Request;
 use AnyEvent::Ident::Response;
 use AnyEvent::Ident::Transaction;
-use Carp qw( croak );
+use Carp qw( croak carp );
 
 # ABSTRACT: Simple asynchronous ident server
 # VERSION
