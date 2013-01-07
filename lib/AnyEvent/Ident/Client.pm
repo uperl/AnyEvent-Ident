@@ -166,6 +166,7 @@ sub _cleanup
   {
     $_->(AnyEvent::Ident::Response->new("$1,$2:ERROR:UNKNOWN-ERROR"))
       for @{ $self->{$key} };
+    delete $self->{$key};
   }
   $self;
 }
