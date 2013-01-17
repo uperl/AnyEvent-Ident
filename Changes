@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - allow custom response classes
 
 0.01      2013-01-15 11:45:47 America/New_York
   - initial version

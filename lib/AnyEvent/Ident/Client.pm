@@ -6,7 +6,6 @@ use v5.10;
 use AnyEvent::Socket qw( tcp_connect );
 use AnyEvent::Handle;
 use Carp qw( carp );
-use AnyEvent::Ident::Response;
 
 # ABSTRACT: Simple asynchronous ident client
 # VERSION
@@ -49,10 +48,18 @@ The port to connect to.
 
 =item *
 
-on_error (carp error)
+on_error (default carp error)
 
 A callback subref to be called on error (either connection or transmission error).
 Passes the error string as the first argument to the callback.
+
+=item *
+
+response_class (default L<AnyEvent::Ident::Response>)
+
+Bless the response object into the given class.  This class SHOULD inherit from
+L<AnyEvent::Ident::Response>, or at least mimic its interface.  This allows you
+to define your own methods for the response class.
 
 =back
 
@@ -63,9 +70,10 @@ sub new
   my $class = shift;
   my $args     = ref $_[0] eq 'HASH' ? (\%{$_[0]}) : ({@_});
   bless { 
-    hostname => $args->{hostname} // '127.0.0.1',  
-    port     => $args->{port}     // 113,
-    on_error => $args->{on_error} // sub { carp $_[0] },
+    hostname       => $args->{hostname}       // '127.0.0.1',  
+    port           => $args->{port}           // 113,
+    on_error       => $args->{on_error}       // sub { carp $_[0] },
+    response_class => $args->{response_class} // 'AnyEvent::Ident::Response',
   }, $class;
 }
 
@@ -87,6 +95,12 @@ or if the C<$client> object falls out of scope.
 sub ident
 {
   my($self, $server_port, $client_port, $cb) = @_;
+  
+  unless(eval { $self->{response_class}->can('new') })
+  {
+    eval 'use ' . $self->{response_class};
+    die $@ if $@;
+  }
   
   my $key = join ':', $server_port, $client_port;
   push @{ $self->{$key} }, $cb;
@@ -138,7 +152,7 @@ sub ident
       $self->{handle}->push_read( line => sub {
         my($handle, $line) = @_;
         $line =~ s/\015?\012//g;
-        my $res = AnyEvent::Ident::Response->new($line);
+        my $res = $self->{response_class}->new($line);
         my $key = $res->_key;
         if(defined $self->{$key})
         {
@@ -164,7 +178,7 @@ sub _cleanup
   my $self = shift;
   foreach my $key (grep /^(\d+):(\d+)$/, keys %$self)
   {
-    $_->(AnyEvent::Ident::Response->new("$1,$2:ERROR:UNKNOWN-ERROR"))
+    $_->($self->{response_class}->new("$1,$2:ERROR:UNKNOWN-ERROR"))
       for @{ $self->{$key} };
     delete $self->{$key};
   }
