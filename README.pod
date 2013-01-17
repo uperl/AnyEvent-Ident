@@ -106,7 +106,7 @@ Most of the time a client wanting to use the ident protocol expects to find
 ident listening to port 113, which on many platforms (such as UNIX) requires
 special privileges (such as root).
 
-Under Linux you can use C<iptables> to forward requests to port 113 to
+Under Linux you can use C<iptables> to forward requests from port 113 to
 an unprivileged port.  I was able to use this incantation to forward port 113
 to port 8113:
 
