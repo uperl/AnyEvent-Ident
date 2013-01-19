@@ -6,6 +6,7 @@ pod_spelling_system:
     - ident
     - IP
     - MSWin32
+    - IRC
 
 pod_coverage:
   private:
