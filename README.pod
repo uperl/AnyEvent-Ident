@@ -89,6 +89,11 @@ peek at the test suite for L<Mojolicious::Plugin::Ident> to see what I mean.
 
 =back
 
+Sometimes L<Net::Ident> might be more appropriate.  L<Net::Ident> has only
+core dependencies and will work on older Perls.  This module requires
+L<AnyEvent> and perl 5.10.0 or better.  L<Net::Ident> may be easier to wrap
+your head around if you don't need or want to run under an event loop.
+
 =head1 CAVEATS
 
 ident is an oldish protocol and almost nobody uses it anymore.  The RFC for the
