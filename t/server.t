@@ -5,10 +5,17 @@ use Test::More tests => 25;
 use AnyEvent::Ident::Client;
 use AnyEvent::Ident::Server;
 
-my $server = eval { AnyEvent::Ident::Server->new( hostname => '127.0.0.1', port => 0, ) };
+our $timeout = AnyEvent->timer( 
+  after => 10,
+  cb    => sub { say STDERR "TIMEOUT"; exit },
+);
+
+my $bind;
+my $server = eval { AnyEvent::Ident::Server->new( hostname => '127.0.0.1', port => 0, on_bind => sub { $bind->send } ) };
 isa_ok $server, 'AnyEvent::Ident::Server';
 
 eval {
+  $bind = AnyEvent->condvar;
   $server->start(sub {
     my $tx = shift;
     if($tx->req->server_port == 400
@@ -21,6 +28,7 @@ eval {
       $tx->reply_with_error('NO-USER');
     }
   });
+  $bind->recv;
 };
 diag $@ if $@;
 
@@ -118,6 +126,7 @@ do {
 
 eval { 
   $server->stop;
+  $bind = AnyEvent->condvar;
   $server->start(sub {
     my $tx = shift;
     if($tx->req->server_port == 999
@@ -130,6 +139,7 @@ eval {
       $tx->reply_with_error('NO-USER');
     }
   });
+  $bind->recv;
 };
 diag $@ if $@;
 

@@ -1,10 +1,17 @@
 use strict;
 use warnings;
 use v5.10;
-use Test::More tests => 12;
+use Test::More tests => 11;
+use AnyEvent;
 use AnyEvent::Ident qw( ident_server ident_client );
 
-my $server = eval {
+our $timeout = AnyEvent->timer( 
+  after => 10,
+  cb    => sub { say STDERR "TIMEOUT"; exit },
+);
+
+my $bindport = eval {
+  my $bind = AnyEvent->condvar;
   ident_server '127.0.0.1', 0, sub {
     my $tx = shift;
     if($tx->req->server_port == 400
@@ -16,11 +23,11 @@ my $server = eval {
     {
       $tx->reply_with_error('NO-USER');
     }
-  }
+  }, { on_bind => sub { $bind->send(shift) } };
+  $bind->recv->bindport;
 };
 
-isa_ok $server, 'AnyEvent::Ident::Server';
-like $server->bindport, qr/^[123456789]\d*$/, "bind port = " . $server->bindport;
+like $bindport, qr/^[123456789]\d*$/, "bind port = " . $bindport;
 
 my $w = AnyEvent->timer( after => 5, cb => sub { say STDERR "TIMEOUT"; exit } );
 
@@ -29,7 +36,7 @@ do {
   
   my $res;
   
-  ident_client '127.0.0.1', $server->bindport, 400, 500, sub {
+  ident_client '127.0.0.1', $bindport, 400, 500, sub {
     $res = shift;
     $done->send;
   };
@@ -47,7 +54,7 @@ do {
   
   my $res;
   
-  ident_client '127.0.0.1', $server->bindport, 1,1, sub {
+  ident_client '127.0.0.1', $bindport, 1,1, sub {
     $res = shift;
     $done->send;
   };
@@ -64,7 +71,7 @@ do {
   
   my $res;
   
-  ident_client '127.0.0.1', $server->bindport, -1, -1, sub {
+  ident_client '127.0.0.1', $bindport, -1, -1, sub {
     $res = shift;
     $done->send;
   };

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - do not call recv from module
+  - use on_bind callback if you need bindport after start but before client connection
 
 0.03      2013-01-19 18:16:47 America/New_York
   - documentation updates

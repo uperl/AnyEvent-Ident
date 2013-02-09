@@ -65,10 +65,11 @@ sub ident_server
 {
   my $hostname = shift;
   my $port     = shift;
+  my $cb       = shift;
   require AnyEvent::Ident::Server;
   my $server = AnyEvent::Ident::Server
-    ->new( hostname => $hostname, port => $port )
-    ->start(@_);
+    ->new( hostname => $hostname, port => $port, %{ $_[0] // {} } )
+    ->start($cb);
   # keep the server object in scope so that
   # we don't unbind from the port.  If you 
   # don't want this, then use the OO interface

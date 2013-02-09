@@ -5,8 +5,15 @@ use Test::More tests => 7;
 use AnyEvent::Ident::Client;
 use AnyEvent::Ident::Server;
 
+our $timeout = AnyEvent->timer( 
+  after => 10,
+  cb    => sub { say STDERR "TIMEOUT"; exit },
+);
+
+my $bindport = AnyEvent->condvar;
+
 my $server = eval { AnyEvent::Ident::Server->new(
-  hostname => '127.0.0.1', port => 0,
+  hostname => '127.0.0.1', port => 0, on_bind => sub { $bindport->send(shift->bindport) },
 ) };
 diag $@ if $@;
 isa_ok $server, 'AnyEvent::Ident::Server';
@@ -18,7 +25,7 @@ eval {
 };
 diag $@ if $@;
 
-like $server->bindport, qr/^[1-9]\d*$/, 'bind port = ' . $server->bindport;
+like $bindport->recv, qr/^[1-9]\d*$/, 'bind port = ' . $server->bindport;
 
 my $w = AnyEvent->timer( after => 5, cb => sub { say STDERR 'TIMEOUT'; exit });
 
