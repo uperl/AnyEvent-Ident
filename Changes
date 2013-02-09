@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - simplify inheritence by removing dep on base
 
 0.04      2013-02-09 09:53:32 America/New_York
   - do not call recv from module
