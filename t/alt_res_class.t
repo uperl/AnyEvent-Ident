@@ -46,6 +46,6 @@ $done->recv;
 package
   Foo::Bar::Baz;
 
-use base qw( AnyEvent::Ident::Response );
+BEGIN { our @ISA = qw( AnyEvent::Ident::Response ) }
 
 sub answer { 42 }

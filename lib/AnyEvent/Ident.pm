@@ -3,8 +3,8 @@ package AnyEvent::Ident;
 use strict;
 use warnings;
 use v5.10;
-use base qw( Exporter );
 
+our @ISA = qw( Exporter );
 our @EXPORT_OK = qw( ident_server ident_client );
 
 # ABSTRACT: Simple asynchronous ident client and server
