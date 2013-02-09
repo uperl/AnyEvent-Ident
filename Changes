@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.05      2013-02-09 18:48:43 America/New_York
   - simplify inheritence by removing dep on base
 
 0.04      2013-02-09 09:53:32 America/New_York
