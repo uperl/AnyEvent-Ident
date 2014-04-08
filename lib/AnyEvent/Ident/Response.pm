@@ -3,7 +3,7 @@ package AnyEvent::Ident::Response;
 use strict;
 use warnings;
 
-# ABSTRACT: Simple asynchromous ident response
+# ABSTRACT: Simple asynchronous ident response
 # VERSION
 
 sub new

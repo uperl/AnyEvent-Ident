@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use AnyEvent::Ident::Response;
 
-# ABSTRACT: Simple asynchromous ident transaction
+# ABSTRACT: Simple asynchronous ident transaction
 # VERSION
 
 =head1 METHODS
