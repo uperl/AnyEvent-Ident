@@ -12,8 +12,8 @@ client:
       my($res) = @_; # isa AnyEvent::Client::Response 
       if($res->is_success)
       {
-        say "user: ", $res->username;
-        say "os:   ", $res->os;
+        print "user: ", $res->username, "\n"
+        print "os:   ", $res->os, "\n"
       }
       else
       {
@@ -40,8 +40,8 @@ server:
 
 # DESCRIPTION
 
-This module provides a simple procedural interface to [AnyEvent::Ident::Client](http://search.cpan.org/perldoc?AnyEvent::Ident::Client) and
-[AnyEvent::Ident::Server](http://search.cpan.org/perldoc?AnyEvent::Ident::Server).
+This module provides a simple procedural interface to [AnyEvent::Ident::Client](https://metacpan.org/pod/AnyEvent::Ident::Client) and
+[AnyEvent::Ident::Server](https://metacpan.org/pod/AnyEvent::Ident::Server).
 
 # FUNCTIONS
 
@@ -49,35 +49,35 @@ This module provides a simple procedural interface to [AnyEvent::Ident::Client](
 
 Start an ident server listening to the address given by `$hostname`
 on port `$port`.  For each request `$callback` will be called and
-passed in an instance of [AnyEvent::Ident::Transaction](http://search.cpan.org/perldoc?AnyEvent::Ident::Transaction).
+passed in an instance of [AnyEvent::Ident::Transaction](https://metacpan.org/pod/AnyEvent::Ident::Transaction).
 
 ## ident\_client $hostname, $port, $server\_port, $client\_port, $callback
 
 Make an ident request with the ident server at `$hostname` on port `$port`
 with the given port pair `$server_port,$client_port`.  When the response
-comes back call `$callback`, with an instance of [AnyEvent::Ident::Response](http://search.cpan.org/perldoc?AnyEvent::Ident::Response).
+comes back call `$callback`, with an instance of [AnyEvent::Ident::Response](https://metacpan.org/pod/AnyEvent::Ident::Response).
 
 # WHY
 
-Why use this distribution instead of [Net::Ident](http://search.cpan.org/perldoc?Net::Ident)?
+Why use this distribution instead of [Net::Ident](https://metacpan.org/pod/Net::Ident)?
 
 - Works under Windows (MSWin32)
 
-    [Net::Ident](http://search.cpan.org/perldoc?Net::Ident) installs (even passing its tests) on Windows, but it does not work.
+    [Net::Ident](https://metacpan.org/pod/Net::Ident) installs (even passing its tests) on Windows, but it does not work.
     It may not work in some UNIX environments depending on your headers and libraries.
 
-- Works with [AnyEvent](http://search.cpan.org/perldoc?AnyEvent)
+- Works with [AnyEvent](https://metacpan.org/pod/AnyEvent)
 
-    This distribution will work with any event loop supported by [AnyEvent](http://search.cpan.org/perldoc?AnyEvent).
+    This distribution will work with any event loop supported by [AnyEvent](https://metacpan.org/pod/AnyEvent).
 
 - Server Included
 
     This distribution comes with a server, which is handy for testing (take a
-    peek at the test suite for [Mojolicious::Plugin::Ident](http://search.cpan.org/perldoc?Mojolicious::Plugin::Ident) to see what I mean.
+    peek at the test suite for [Mojolicious::Plugin::Ident](https://metacpan.org/pod/Mojolicious::Plugin::Ident) to see what I mean.
 
-Sometimes [Net::Ident](http://search.cpan.org/perldoc?Net::Ident) might be more appropriate.  [Net::Ident](http://search.cpan.org/perldoc?Net::Ident) has only
+Sometimes [Net::Ident](https://metacpan.org/pod/Net::Ident) might be more appropriate.  [Net::Ident](https://metacpan.org/pod/Net::Ident) has only
 core dependencies and will work on older Perls.  This module requires
-[AnyEvent](http://search.cpan.org/perldoc?AnyEvent) and perl 5.10.0 or better.  [Net::Ident](http://search.cpan.org/perldoc?Net::Ident) may be easier to wrap
+[AnyEvent](https://metacpan.org/pod/AnyEvent).  [Net::Ident](https://metacpan.org/pod/Net::Ident) may be easier to wrap
 your head around if you don't need or want to run under an event loop.
 
 # CAVEATS
@@ -110,8 +110,8 @@ for clients connecting via the loopback interface (localhost).
 # SEE ALSO
 
 [RFC1413](http://tools.ietf.org/html/rfc1413),
-[AnyEvent::Ident::Client](http://search.cpan.org/perldoc?AnyEvent::Ident::Client),
-[AnyEvent::Ident::Server](http://search.cpan.org/perldoc?AnyEvent::Ident::Server)
+[AnyEvent::Ident::Client](https://metacpan.org/pod/AnyEvent::Ident::Client),
+[AnyEvent::Ident::Server](https://metacpan.org/pod/AnyEvent::Ident::Server)
 
 # AUTHOR
 
