@@ -2,7 +2,6 @@ package AnyEvent::Ident::Client;
 
 use strict;
 use warnings;
-use v5.10;
 use AnyEvent::Socket qw( tcp_connect );
 use AnyEvent::Handle;
 use Carp qw( carp );
@@ -19,8 +18,8 @@ use Carp qw( carp );
    my($res) = @_; # isa AnyEvent::Client::Response 
    if($res->is_success)
    {
-     say "user: ", $res->username;
-     say "os:   ", $res->os;
+     print "user: ", $res->username, "\n";
+     print "os:   ", $res->os, "\n";
    }
    else
    {
@@ -69,11 +68,13 @@ sub new
 {
   my $class = shift;
   my $args     = ref $_[0] eq 'HASH' ? (\%{$_[0]}) : ({@_});
+  my $port = $args->{port};
+  $port = 113 unless defined $port;
   bless { 
-    hostname       => $args->{hostname}       // '127.0.0.1',  
-    port           => $args->{port}           // 113,
-    on_error       => $args->{on_error}       // sub { carp $_[0] },
-    response_class => $args->{response_class} // 'AnyEvent::Ident::Response',
+    hostname       => $args->{hostname}       || '127.0.0.1',  
+    port           => $port,
+    on_error       => $args->{on_error}       || sub { carp $_[0] },
+    response_class => $args->{response_class} || 'AnyEvent::Ident::Response',
   }, $class;
 }
 

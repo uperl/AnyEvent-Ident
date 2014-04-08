@@ -2,7 +2,6 @@ package AnyEvent::Ident::Server;
 
 use strict;
 use warnings;
-use v5.10;
 use AnyEvent;
 use AnyEvent::Socket qw( tcp_server );
 use AnyEvent::Handle;
@@ -82,12 +81,14 @@ when using an ephemeral and you do not know the port number in advance.
 sub new
 {
   my $class = shift;
-  my $args     = ref $_[0] eq 'HASH' ? (\%{$_[0]}) : ({@_});
+  my $args  = ref $_[0] eq 'HASH' ? (\%{$_[0]}) : ({@_});
+  my $port  = $args->{port};
+  $port = 113 unless defined $port;
   bless {
     hostname => $args->{hostname},  
-    port     => $args->{port}     // 113,
-    on_error => $args->{on_error} // sub { carp $_[0] },
-    on_bind  => $args->{on_bind}  // sub { },
+    port     => $port,
+    on_error => $args->{on_error} || sub { carp $_[0] },
+    on_bind  => $args->{on_bind}  || sub { },
   }, $class;
 }
 

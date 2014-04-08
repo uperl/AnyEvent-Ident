@@ -2,7 +2,6 @@ package AnyEvent::Ident::Transaction;
 
 use strict;
 use warnings;
-use v5.10;
 use AnyEvent::Ident::Response;
 
 # ABSTRACT: Simple asynchromous ident transaction
@@ -48,7 +47,8 @@ sub reply_with_user
 {
   my $self = shift;
   my $username = pop;
-  my $os = shift // 'OTHER';
+  my $os = shift;
+  $os = 'OTHER' unless defined $os;
   $self->{cb}->(
     AnyEvent::Ident::Response->new(
       req      => $self->{req},

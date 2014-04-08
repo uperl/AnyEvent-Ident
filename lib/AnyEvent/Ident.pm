@@ -2,7 +2,6 @@ package AnyEvent::Ident;
 
 use strict;
 use warnings;
-use v5.10;
 use Exporter ();
 
 our @ISA = qw( Exporter );
@@ -21,8 +20,8 @@ client:
    my($res) = @_; # isa AnyEvent::Client::Response 
    if($res->is_success)
    {
-     say "user: ", $res->username;
-     say "os:   ", $res->os;
+     print "user: ", $res->username, "\n"
+     print "os:   ", $res->os, "\n"
    }
    else
    {
@@ -62,6 +61,12 @@ passed in an instance of L<AnyEvent::Ident::Transaction>.
 
 =cut
 
+# keep the server object in scope so that
+# we don't unbind from the port.  If you 
+# don't want this, then use the OO interface
+# for ::Server instead.
+my $keep = [];
+
 sub ident_server
 {
   my $hostname = shift;
@@ -69,13 +74,8 @@ sub ident_server
   my $cb       = shift;
   require AnyEvent::Ident::Server;
   my $server = AnyEvent::Ident::Server
-    ->new( hostname => $hostname, port => $port, %{ $_[0] // {} } )
+    ->new( hostname => $hostname, port => $port, %{ $_[0] || {} } )
     ->start($cb);
-  # keep the server object in scope so that
-  # we don't unbind from the port.  If you 
-  # don't want this, then use the OO interface
-  # for ::Server instead.
-  state $keep = [];
   push @$keep, $server;
   return $server;
 }
@@ -128,7 +128,7 @@ peek at the test suite for L<Mojolicious::Plugin::Ident> to see what I mean.
 
 Sometimes L<Net::Ident> might be more appropriate.  L<Net::Ident> has only
 core dependencies and will work on older Perls.  This module requires
-L<AnyEvent> and perl 5.10.0 or better.  L<Net::Ident> may be easier to wrap
+L<AnyEvent>.  L<Net::Ident> may be easier to wrap
 your head around if you don't need or want to run under an event loop.
 
 =head1 CAVEATS

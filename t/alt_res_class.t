@@ -1,13 +1,12 @@
 use strict;
 use warnings;
-use v5.10;
 use Test::More tests => 7;
 use AnyEvent::Ident::Client;
 use AnyEvent::Ident::Server;
 
 our $timeout = AnyEvent->timer( 
   after => 10,
-  cb    => sub { say STDERR "TIMEOUT"; exit },
+  cb    => sub { diag "TIMEOUT"; exit },
 );
 
 my $bindport = AnyEvent->condvar;
@@ -27,7 +26,7 @@ diag $@ if $@;
 
 like $bindport->recv, qr/^[1-9]\d*$/, 'bind port = ' . $server->bindport;
 
-my $w = AnyEvent->timer( after => 5, cb => sub { say STDERR 'TIMEOUT'; exit });
+my $w = AnyEvent->timer( after => 5, cb => sub { diag 'TIMEOUT'; exit });
 
 my $done = AnyEvent->condvar;
 

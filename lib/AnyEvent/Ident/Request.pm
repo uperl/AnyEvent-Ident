@@ -2,7 +2,6 @@ package AnyEvent::Ident::Request;
 
 use strict;
 use warnings;
-use v5.10;
 use Carp qw( croak );
 
 # ABSTRACT: Simple asynchronous ident response
