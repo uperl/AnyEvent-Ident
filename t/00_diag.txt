@@ -2,5 +2,5 @@ AnyEvent
 AnyEvent::Handle
 AnyEvent::Socket
 EV
-ExtUtils::MakeMaker
+Module::Build
 Test::More
