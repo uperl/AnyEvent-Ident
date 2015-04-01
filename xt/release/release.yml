@@ -9,6 +9,7 @@ pod_spelling_system:
     - MSWin
     - Ident
     - IRC
+    - RFC1413
 
 pod_coverage:
   private:
