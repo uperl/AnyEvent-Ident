@@ -1,6 +1,4 @@
 AnyEvent
-AnyEvent::Handle
-AnyEvent::Socket
 EV
-Module::Build
+ExtUtils::MakeMaker
 Test::More
