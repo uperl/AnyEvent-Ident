@@ -61,29 +61,6 @@ Make an ident request with the ident server at `$hostname` on port `$port`
 with the given port pair `$server_port,$client_port`.  When the response
 comes back call `$callback`, with an instance of [AnyEvent::Ident::Response](https://metacpan.org/pod/AnyEvent::Ident::Response).
 
-# WHY
-
-Why use this distribution instead of [Net::Ident](https://metacpan.org/pod/Net::Ident)?
-
-- Works under Windows (MSWin32)
-
-    [Net::Ident](https://metacpan.org/pod/Net::Ident) installs (even passing its tests) on Windows, but it does not work.
-    It may not work in some UNIX environments depending on your headers and libraries.
-
-- Works with [AnyEvent](https://metacpan.org/pod/AnyEvent)
-
-    This distribution will work with any event loop supported by [AnyEvent](https://metacpan.org/pod/AnyEvent).
-
-- Server Included
-
-    This distribution comes with a server, which is handy for testing (take a
-    peek at the test suite for [Mojolicious::Plugin::Ident](https://metacpan.org/pod/Mojolicious::Plugin::Ident) to see what I mean.
-
-Sometimes [Net::Ident](https://metacpan.org/pod/Net::Ident) might be more appropriate.  [Net::Ident](https://metacpan.org/pod/Net::Ident) has only
-core dependencies and will work on older Perls.  This module requires
-[AnyEvent](https://metacpan.org/pod/AnyEvent).  [Net::Ident](https://metacpan.org/pod/Net::Ident) may be easier to wrap
-your head around if you don't need or want to run under an event loop.
-
 # CAVEATS
 
 ident is an oldish protocol and almost nobody uses it anymore.  The RFC for the
@@ -113,9 +90,19 @@ for clients connecting via the loopback interface (localhost).
 
 # SEE ALSO
 
-[RFC1413](http://tools.ietf.org/html/rfc1413),
-[AnyEvent::Ident::Client](https://metacpan.org/pod/AnyEvent::Ident::Client),
-[AnyEvent::Ident::Server](https://metacpan.org/pod/AnyEvent::Ident::Server)
+- [AnyEvent::Ident::Client](https://metacpan.org/pod/AnyEvent::Ident::Client)
+
+    Client OO Interface
+
+- [AnyEvent::Ident::Server](https://metacpan.org/pod/AnyEvent::Ident::Server)
+
+    Server OO Interface
+
+- [Net::Ident](https://metacpan.org/pod/Net::Ident)
+
+    Blocking implementation of client only.
+
+- [RFC1413](http://tools.ietf.org/html/rfc1413)
 
 # AUTHOR
 
