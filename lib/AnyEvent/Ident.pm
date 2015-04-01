@@ -55,11 +55,15 @@ L<AnyEvent::Ident::Server>.
 
 =head2 ident_server
 
- my $server = ident_server($hostname, $port, $callback);
+ my $server = ident_server $hostname, $port, $callback;
+ my $server = ident_server $hostname, $port, $callback, \%opt;
 
 Start an ident server listening to the address given by C<$hostname>
 on port C<$port>.  For each request C<$callback> will be called and
 passed in an instance of L<AnyEvent::Ident::Transaction>.
+
+C<%opt> is optional hash of arguments.  See L<AnyEvent::Ident::Server#CONSTRUCTOR>
+for legal key/value pairs and defaults.
 
 =cut
 
@@ -69,7 +73,7 @@ passed in an instance of L<AnyEvent::Ident::Transaction>.
 # for ::Server instead.
 my $keep = [];
 
-sub ident_server
+sub ident_server ($$$;$)
 {
   my $hostname = shift;
   my $port     = shift;
@@ -84,7 +88,7 @@ sub ident_server
 
 =head2 ident_client
 
- my $client = ident_client($hostname, $port, $server_port, $client_port, $callback);
+ my $client = ident_client $hostname, $port, $server_port, $client_port, $callback;
 
 Make an ident request with the ident server at C<$hostname> on port C<$port>
 with the given port pair C<$server_port,$client_port>.  When the response
@@ -92,7 +96,7 @@ comes back call C<$callback>, with an instance of L<AnyEvent::Ident::Response>.
 
 =cut
 
-sub ident_client
+sub ident_client ($$$$$)
 {
   my $hostname = shift;
   my $port     = shift;

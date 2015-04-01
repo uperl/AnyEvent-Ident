@@ -47,15 +47,19 @@ This module provides a simple procedural interface to [AnyEvent::Ident::Client](
 
 ## ident\_server
 
-    my $server = ident_server($hostname, $port, $callback);
+    my $server = ident_server $hostname, $port, $callback;
+    my $server = ident_server $hostname, $port, $callback, \%opt;
 
 Start an ident server listening to the address given by `$hostname`
 on port `$port`.  For each request `$callback` will be called and
 passed in an instance of [AnyEvent::Ident::Transaction](https://metacpan.org/pod/AnyEvent::Ident::Transaction).
 
+`%opt` is optional hash of arguments.  See [AnyEvent::Ident::Server#CONSTRUCTOR](https://metacpan.org/pod/AnyEvent::Ident::Server#CONSTRUCTOR)
+for legal key/value pairs and defaults.
+
 ## ident\_client
 
-    my $client = ident_client($hostname, $port, $server_port, $client_port, $callback);
+    my $client = ident_client $hostname, $port, $server_port, $client_port, $callback;
 
 Make an ident request with the ident server at `$hostname` on port `$port`
 with the given port pair `$server_port,$client_port`.  When the response
