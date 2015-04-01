@@ -2,6 +2,12 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.07      2015-04-01 14:51:27 -0400
+  - Functions found in AnyEvent::Ident now have prototypes.  Any code that is
+    using the API as documented shouldn't need to be changed.  This does not
+    affect the OO interface (AnyEvent::Ident::Client/Server)
+  - Documentation cleanup
+
 0.06      2014-04-08 14:38:03 -0400
   - support for Perl 5.8
 
