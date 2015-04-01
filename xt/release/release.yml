@@ -10,6 +10,8 @@ pod_spelling_system:
     - Ident
     - IRC
     - RFC1413
+    - bindport
+    - req
 
 pod_coverage:
   private:

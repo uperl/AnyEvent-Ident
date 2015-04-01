@@ -29,38 +29,36 @@ use Carp qw( carp );
 
 =head1 CONSTRUCTOR
 
+ my $client = AnyEvent::Ident::Client->new(%args);
+
 The constructor takes the following optional arguments:
 
-=over 4
+=head2 hostname
 
-=item *
-
-hostname (default 127.0.0.1)
+default 127.0.0.1
 
 The hostname to connect to.
 
-=item *
+=head2 port
 
-port (default 113)
+default 113
 
 The port to connect to.
 
-=item *
+=head2 on_error
 
-on_error (default carp error)
+default carp error
 
 A callback subref to be called on error (either connection or transmission error).
 Passes the error string as the first argument to the callback.
 
-=item *
+=head2 response_close
 
-response_class (default L<AnyEvent::Ident::Response>)
+default L<AnyEvent::Ident::Response>
 
 Bless the response object into the given class.  This class SHOULD inherit from
 L<AnyEvent::Ident::Response>, or at least mimic its interface.  This allows you
 to define your own methods for the response class.
-
-=back
 
 =cut
 
@@ -80,7 +78,9 @@ sub new
 
 =head1 METHODS
 
-=head2 $client-E<gt>ident( $server_port, $client_port, $callback )
+=head2 ident
+
+ $client->ident( $server_port, $client_port, $callback );
 
 Send an ident request to the ident server with the given TCP port pair.
 The callback will be called when the response is returned from the
@@ -167,7 +167,9 @@ sub ident
   return $self;
 }
 
-=head2 $client-E<gt>close
+=head2 close
+
+ $client->close;
 
 Close the connection to the ident server.  Requests that are in progress will
 receive an error response with the type C<UNKNOWN-ERROR>.

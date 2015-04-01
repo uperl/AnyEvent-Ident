@@ -9,7 +9,9 @@ use AnyEvent::Ident::Response;
 
 =head1 METHODS
 
-=head2 $tx-E<gt>req
+=head2 req
+
+ my $req = $tx->req;
 
 Returns the request object for the transaction
 (an instance of L<AnyEvent::Ident::Request>).
@@ -18,7 +20,10 @@ Returns the request object for the transaction
 
 sub req { shift->{req} }
 
-=head2 $tx-E<gt>reply_with_user( [ $os ], $username )
+=head2 reply_with_user
+
+ $tx->reply_with_user($os, $username);
+ $tx->reply_with_user($os);
 
 Reply to the client with the given username and operating system.  If
 C<$os> is not specified then "OTHER" is used for the operating system.
@@ -58,7 +63,9 @@ sub reply_with_user
   );
 }
 
-=head2 $tx-E<gt>reply_with_error( $error_type )
+=head2 reply_with_error
+
+ $tx->reply_with_error( $error_type );
 
 Reply to the client with the given error.  Should be one of
 
@@ -106,11 +113,15 @@ sub reply_with_error
   );
 }
 
-=head2 $tx-E<gt>remote_port
+=head2 remote_port
+
+ my $port = $tx->remote_port;
 
 Returns the remote TCP port being used to make the request.
 
-=head2 $tx-E<gt>local_port
+=head2 local_port
+
+ my $port = $tx->local_port;
 
 Returns the local TCP port being used to make the request.
 
@@ -119,7 +130,9 @@ Returns the local TCP port being used to make the request.
 sub remote_port { shift->{remote_port} }
 sub local_port { shift->{local_port} }
 
-=head2 $tx-E<gt>remote_address
+=head2 remote_address
+
+ my $address = $tx->remote_address;
 
 Returns the IP address from whence the ident request is coming from.
 

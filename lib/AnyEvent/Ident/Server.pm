@@ -44,37 +44,33 @@ applications, such as IRC).
 
 =head1 CONSTRUCTOR
 
+ my $server = AnyEvent::Ident::Server->new(%args);
+
 The constructor takes the following optional arguments:
 
-=over 4
+=head2 hostname
 
-=item *
-
-hostname (default 127.0.0.1)
+default 127.0.0.1
 
 The hostname to connect to.
 
-=item *
+=head2 port
 
-port (default 113)
+default 113
 
 The port to connect to.
 
-=item *
+=head2 on_error
 
-on_error (carp error)
+default carp error
 
 A callback subref to be called on error (either connection or transmission error).
 Passes the error string as the first argument to the callback.
 
-=item *
-
-on_bind
+=head2 on_bind
 
 A callback subref to be called when the socket has been bound to a port.  Useful
 when using an ephemeral and you do not know the port number in advance.
-
-=back
 
 =cut
 
@@ -92,7 +88,9 @@ sub new
   }, $class;
 }
 
-=head2 $server-E<gt>start( $callback )
+=head2 start
+
+ $server->start( $callback );
 
 Start the Ident server.  The given callback will be called on each ident
 request (there may be multiple ident requests for each connection).  The
@@ -158,7 +156,9 @@ sub start
   $self;
 }
 
-=head2 $server-E<gt>bindport
+=head2 bindport
+
+ my $port = $server->bindport;
 
 The bind port.  If port is set to zero in the constructor or on
 start, then an ephemeral port will be used, and you can get the
@@ -168,7 +168,9 @@ port number here.
 
 sub bindport { shift->{bindport} }
 
-=head2 $server-E<gt>stop
+=head2 stop
+
+ $server-E<gt>stop
 
 Stop the server and unbind to the port.
 

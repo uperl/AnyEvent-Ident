@@ -53,7 +53,9 @@ L<AnyEvent::Ident::Server>.
 
 =head1 FUNCTIONS
 
-=head2 ident_server $hostname, $port, $callback
+=head2 ident_server
+
+ my $server = ident_server($hostname, $port, $callback);
 
 Start an ident server listening to the address given by C<$hostname>
 on port C<$port>.  For each request C<$callback> will be called and
@@ -80,7 +82,9 @@ sub ident_server
   return $server;
 }
 
-=head2 ident_client $hostname, $port, $server_port, $client_port, $callback
+=head2 ident_client
+
+ my $client = ident_client($hostname, $port, $server_port, $client_port, $callback);
 
 Make an ident request with the ident server at C<$hostname> on port C<$port>
 with the given port pair C<$server_port,$client_port>.  When the response

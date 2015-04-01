@@ -73,36 +73,52 @@ sub _key
 
 =head1 ATTRIBUTES
 
-=head2 $res-E<gt>as_string
+=head2 as_string
+
+ my $str = $res->as_string
 
 The raw request as it was returned from the server.
 
-=head2 $res-E<gt>is_success
+=head2 is_success
+
+ my $bool = $res->is_success
 
 True if the server returned a user and operating system, false otherwise.
 
-=head2 $res-E<gt>server_port
+=head2 server_port
+
+ my $port = $res->server_port
 
 The server port in the original request.
 
-=head2 $res-E<gt>client_port
+=head2 client_port
+
+ my $port = $res->client_port
 
 The client port in the original request.
 
-=head2 $res-E<gt>username
+=head2 username
+
+ my $username = $res->username
 
 The username in the response.
 
-=head2 $res-E<gt>os
+=head2 os
+
+ my $os = $res->os
 
 The operating system in the response.
 
-=head2 $res-E<gt>charset
+=head2 charset
+
+ my $charset = $res->charset
 
 The encoding for the username.  This will be C<US-ASCII> if it
 was not provided by the server.
 
-=head2 $res-E<gt>error_type
+=head2 error_type
+
+ my $type = $res->error_type
 
 The error type returned from the server.  Normally, this is one of
 

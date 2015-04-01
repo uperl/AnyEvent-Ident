@@ -38,15 +38,21 @@ sub new
 
 =head1 ATTRIBUTES
 
-=head2 $res-E<gt>as_string
+=head2 as_string
+
+ my $str = $res->as_string;
 
 The raw request as given by the client.
 
-=head2 $res-E<gt>server_port
+=head2 server_port
+
+ my $port = $res->server_port;
 
 The server port.
 
-=head2 $res-E<gt>client_port
+=head2 client_port
+
+ my $port = $res->client_port;
 
 The client port.
 
