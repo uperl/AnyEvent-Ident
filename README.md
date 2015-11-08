@@ -110,7 +110,7 @@ for clients connecting via the loopback interface (localhost).
 
 # AUTHOR
 
-Graham Ollis <plicease@cpan.org>
+Graham Ollis &lt;plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
