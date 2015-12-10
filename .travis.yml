@@ -4,7 +4,6 @@ sudo: false
 install:
   - dzil authordeps --missing | cpanm -n
   - dzil listdeps --missing | cpanm -n
-  - cpanm -n https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/Clustericious-1.10_03.tar.gz
 
 script:
   - dzil test -v
