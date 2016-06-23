@@ -1,4 +1,0 @@
-AnyEvent
-EV
-ExtUtils::MakeMaker
-Test::More
