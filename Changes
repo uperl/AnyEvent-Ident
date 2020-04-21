@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.08      2020-04-20 19:38:57 -0600
   - Switch to MakeMaker
 
 0.07      2015-04-01 14:51:27 -0400
