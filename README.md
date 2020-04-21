@@ -6,37 +6,41 @@ Simple asynchronous ident client and server
 
 client:
 
-    use AnyEvent::Ident qw( ident_client );
-    
-    ident_client '127.0.0.1', 113, $server_port, $client_port, sub {
-      my($res) = @_; # isa AnyEvent::Client::Response 
-      if($res->is_success)
-      {
-        print "user: ", $res->username, "\n"
-        print "os:   ", $res->os, "\n"
-      }
-      else
-      {
-        warn "Ident error: " $res->error_type;
-      }
-    };
+```perl
+use AnyEvent::Ident qw( ident_client );
+
+ident_client '127.0.0.1', 113, $server_port, $client_port, sub {
+  my($res) = @_; # isa AnyEvent::Client::Response 
+  if($res->is_success)
+  {
+    print "user: ", $res->username, "\n"
+    print "os:   ", $res->os, "\n"
+  }
+  else
+  {
+    warn "Ident error: " $res->error_type;
+  }
+};
+```
 
 server:
 
-    use AnyEvent::Ident qw( ident_server );
-    
-    ident_server '127.0.0.1', 113, sub {
-      my $tx = shift;
-      if($tx->req->server_port == 400
-      && $tx->req->client_port == 500)
-      {
-        $tx->reply_with_user('UNIX', 'grimlock');
-      }
-      else
-      {
-        $tx->reply_with_error('NO-USER');
-      }
-    };
+```perl
+use AnyEvent::Ident qw( ident_server );
+
+ident_server '127.0.0.1', 113, sub {
+  my $tx = shift;
+  if($tx->req->server_port == 400
+  && $tx->req->client_port == 500)
+  {
+    $tx->reply_with_user('UNIX', 'grimlock');
+  }
+  else
+  {
+    $tx->reply_with_error('NO-USER');
+  }
+};
+```
 
 # DESCRIPTION
 
@@ -47,8 +51,10 @@ This module provides a simple procedural interface to [AnyEvent::Ident::Client](
 
 ## ident\_server
 
-    my $server = ident_server $hostname, $port, $callback;
-    my $server = ident_server $hostname, $port, $callback, \%opt;
+```perl
+my $server = ident_server $hostname, $port, $callback;
+my $server = ident_server $hostname, $port, $callback, \%opt;
+```
 
 Start an ident server listening to the address given by `$hostname`
 on port `$port`.  For each request `$callback` will be called and
@@ -59,7 +65,9 @@ for legal key/value pairs and defaults.
 
 ## ident\_client
 
-    my $client = ident_client $hostname, $port, $server_port, $client_port, $callback;
+```perl
+my $client = ident_client $hostname, $port, $server_port, $client_port, $callback;
+```
 
 Make an ident request with the ident server at `$hostname` on port `$port`
 with the given port pair `$server_port,$client_port`.  When the response
@@ -86,8 +94,10 @@ Under Linux you can use `iptables` to forward requests from port 113 to
 an unprivileged port.  I was able to use this incantation to forward port 113
 to port 8113:
 
-    # iptables -t nat -A PREROUTING -p tcp --dport 113 -j REDIRECT --to-port 8113
-    # iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 113 -j REDIRECT --to-port 8113
+```
+# iptables -t nat -A PREROUTING -p tcp --dport 113 -j REDIRECT --to-port 8113
+# iptables -t nat -I OUTPUT -p tcp -d 127.0.0.1 --dport 113 -j REDIRECT --to-port 8113
+```
 
 The first rule is sufficient for external clients, the second rule was required
 for clients connecting via the loopback interface (localhost).
