@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -ex
-
-cip exec mkdir /home/cip/tmp
