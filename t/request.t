@@ -7,7 +7,7 @@ do {
   my $req = eval { AnyEvent::Ident::Request->new(" 44 , 33 ") };
   diag $@ if $@;
   isa_ok $req, 'AnyEvent::Ident::Request';
-  
+
   is eval { $req->server_port }, 44, "server_port = 44";
   diag $@ if $@;
   is eval { $req->client_port }, 33, "client_port = 33";
@@ -21,7 +21,7 @@ do {
   diag $@ if $@;
   diag $@ if $@;
   isa_ok $req, 'AnyEvent::Ident::Request';
-  
+
   is eval { $req->server_port }, 44, "server_port = 44";
   diag $@ if $@;
   is eval { $req->client_port }, 33, "client_port = 33";

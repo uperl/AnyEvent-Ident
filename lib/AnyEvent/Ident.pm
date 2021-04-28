@@ -2,9 +2,8 @@ package AnyEvent::Ident;
 
 use strict;
 use warnings;
-use Exporter ();
+use base qw( Exporter );
 
-our @ISA = qw( Exporter );
 our @EXPORT_OK = qw( ident_server ident_client );
 
 # ABSTRACT: Simple asynchronous ident client and server
@@ -17,7 +16,7 @@ client:
  use AnyEvent::Ident qw( ident_client );
  
  ident_client '127.0.0.1', 113, $server_port, $client_port, sub {
-   my($res) = @_; # isa AnyEvent::Client::Response 
+   my($res) = @_; # isa AnyEvent::Client::Response
    if($res->is_success)
    {
      print "user: ", $res->username, "\n"
@@ -68,7 +67,7 @@ for legal key/value pairs and defaults.
 =cut
 
 # keep the server object in scope so that
-# we don't unbind from the port.  If you 
+# we don't unbind from the port.  If you
 # don't want this, then use the OO interface
 # for ::Server instead.
 my $keep = [];
@@ -110,16 +109,16 @@ sub ident_client ($$$$$)
 
 ident is an oldish protocol and almost nobody uses it anymore.  The RFC for the
 protocol clearly states that ident should not be used for authentication, at most
-it should be used only for audit (for example annotation of log files).  In Windows 
+it should be used only for audit (for example annotation of log files).  In Windows
 and possibly other operating systems, an unprivileged user can listen to port 113
-and on any untrusted network, a remote ident server is not a secure authentication 
+and on any untrusted network, a remote ident server is not a secure authentication
 mechanism.
 
 No modern operating systems enable the ident service by default, so you can't expect
 it to be there unless you have control of the server and have specifically enabled
 it.
 
-Most of the time a client wanting to use the ident protocol expects to find 
+Most of the time a client wanting to use the ident protocol expects to find
 ident listening to port 113, which on many platforms (such as UNIX) requires
 special privileges (such as root).
 

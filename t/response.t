@@ -15,7 +15,7 @@ do {
 
   is eval { $response->as_string }, "56192 , 113 : USERID : UNIX :optimus", "as_string";
   diag $@ if $@;
-  
+
   is $response->server_port, '56192',     'server_port = 56192';
   is $response->client_port, '113',       'client_port = 113';
   is $response->username,    'optimus',   'username = optimus';
@@ -36,10 +36,10 @@ do {
   };
   diag $@ if $@;
   isa_ok $response, 'AnyEvent::Ident::Response';
-  
+
   is eval { $response->as_string }, "56192,113:USERID:UNIX:optimus", "as_string";
   diag $@ if $@;
-  
+
   is $response->server_port, '56192',     'server_port = 56192';
   is $response->client_port, '113',       'client_port = 113';
   is $response->username,    'optimus',   'username = optimus';
@@ -65,7 +65,7 @@ do {
   is $response->client_port, '56192',       'client_port = 56192';
   is $response->error_type,  'NO-USER',     'error_type = NO-USER';
   is $response->_key,        '42128:56192', '_key = 42128:56192';
-  
+
   ok !$response->is_success, "is_success (false)";
 };
 
@@ -87,6 +87,6 @@ do {
   is $response->client_port, '56192',       'client_port = 56192';
   is $response->error_type,  'NO-USER',     'error_type = NO-USER';
   is $response->_key,        '42128:56192', '_key = 42128:56192';
-  
+
   ok !$response->is_success, "is_success (false)";
 };

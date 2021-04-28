@@ -27,7 +27,7 @@ sub req { shift->{req} }
 
 Reply to the client with the given username and operating system.  If
 C<$os> is not specified then "OTHER" is used for the operating system.
-The operating system should be one specified in 
+The operating system should be one specified in
 L<RFC-952|http://tools.ietf.org/html/rfc1340> under SYSTEM NAMES, or
 C<OTHER>.  Common system names include C<UNIX>, C<WIN32> and C<VMS>.
 C<OTHER> should be used when the identification ($username) does not map

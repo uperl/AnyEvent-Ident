@@ -15,7 +15,7 @@ use Carp qw( carp );
  
  my $client = AnyEvent::Ident::Client->new( hostname => 127.0.0.1' );
  $client->ident($server_port, $client_port, sub {
-   my($res) = @_; # isa AnyEvent::Client::Response 
+   my($res) = @_; # isa AnyEvent::Client::Response
    if($res->is_success)
    {
      print "user: ", $res->username, "\n";
@@ -68,8 +68,8 @@ sub new
   my $args     = ref $_[0] eq 'HASH' ? (\%{$_[0]}) : ({@_});
   my $port = $args->{port};
   $port = 113 unless defined $port;
-  bless { 
-    hostname       => $args->{hostname}       || '127.0.0.1',  
+  bless {
+    hostname       => $args->{hostname}       || '127.0.0.1',
     port           => $port,
     on_error       => $args->{on_error}       || sub { carp $_[0] },
     response_class => $args->{response_class} || 'AnyEvent::Ident::Response',
@@ -84,7 +84,7 @@ sub new
 
 Send an ident request to the ident server with the given TCP port pair.
 The callback will be called when the response is returned from the
-server.  Its only argument will be an instance of 
+server.  Its only argument will be an instance of
 L<AnyEvent::Ident::Response>.
 
 On the first call to this method, a connection to the ident server
@@ -96,25 +96,25 @@ or if the C<$client> object falls out of scope.
 sub ident
 {
   my($self, $server_port, $client_port, $cb) = @_;
-  
+
   unless(eval { $self->{response_class}->can('new') })
   {
     eval 'use ' . $self->{response_class};
     die $@ if $@;
   }
-  
+
   my $key = join ':', $server_port, $client_port;
   push @{ $self->{$key} }, $cb;
   return if @{ $self->{$key} } > 1;
-  
-  # if handle is defined then the connection is open and we can push 
+
+  # if handle is defined then the connection is open and we can push
   # the request right away.
   if(defined $self->{handle})
   {
     $self->{handle}->push_write("$server_port,$client_port\015\012");
     return;
   }
-  
+
   # if handle is not defined, but wait is, then we are waiting for
   # the connection, and we queue up the request
   if(defined $self->{wait})
@@ -122,13 +122,13 @@ sub ident
     push @{ $self->{wait} }, "$server_port,$client_port\015\012";
     return;
   }
-  
+
   $self->{wait} = [];
-  
+
   tcp_connect $self->{hostname}, $self->{port}, sub {
     my($fh) = @_;
     return $self->_cleanup->{on_error}->("unable to connect: $!") unless $fh;
-    
+
     $self->{handle} = AnyEvent::Handle->new(
       fh       => $fh,
       on_error => sub {
@@ -144,11 +144,11 @@ sub ident
        delete $self->{handle};
       },
     );
-    
+
     $self->{handle}->push_write("$server_port,$client_port\015\012");
     $self->{handle}->push_write($_) for @{ $self->{wait} };
     delete $self->{wait};
-    
+
     $self->{handle}->on_read(sub {
       $self->{handle}->push_read( line => sub {
         my($handle, $line) = @_;
@@ -163,7 +163,7 @@ sub ident
       });
     });
   };
-  
+
   return $self;
 }
 

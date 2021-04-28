@@ -4,7 +4,7 @@ use Test::More tests => 11;
 use AnyEvent;
 use AnyEvent::Ident qw( ident_server ident_client );
 
-our $timeout = AnyEvent->timer( 
+our $timeout = AnyEvent->timer(
   after => 10,
   cb    => sub { diag "TIMEOUT"; exit },
 );
@@ -32,16 +32,16 @@ my $w = AnyEvent->timer( after => 5, cb => sub { diag "TIMEOUT"; exit } );
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   ident_client '127.0.0.1', $bindport, 400, 500, sub {
     $res = shift;
     $done->send;
   };
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok $res->is_success, 'is_success';
   is $res->username, 'grimlock', 'username = grimlock';
@@ -50,16 +50,16 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   ident_client '127.0.0.1', $bindport, 1,1, sub {
     $res = shift;
     $done->send;
   };
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'NO-USER', 'error_type = NO-USER';
@@ -67,16 +67,16 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   ident_client '127.0.0.1', $bindport, -1, -1, sub {
     $res = shift;
     $done->send;
   };
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'INVALID-PORT', 'error_type = INVALID-PORT';
