@@ -1,4 +1,4 @@
-# AnyEvent::Ident [![Build Status](https://secure.travis-ci.org/plicease/AnyEvent-Ident.png)](http://travis-ci.org/plicease/AnyEvent-Ident) ![windows](https://github.com/plicease/AnyEvent-Ident/workflows/windows/badge.svg) ![macos](https://github.com/plicease/AnyEvent-Ident/workflows/macos/badge.svg)
+# AnyEvent::Ident ![linux](https://github.com/uperl/AnyEvent-Ident/workflows/linux/badge.svg) ![windows](https://github.com/uperl/AnyEvent-Ident/workflows/windows/badge.svg) ![macos](https://github.com/uperl/AnyEvent-Ident/workflows/macos/badge.svg) ![cygwin](https://github.com/uperl/AnyEvent-Ident/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/uperl/AnyEvent-Ident/workflows/msys2-mingw/badge.svg)
 
 Simple asynchronous ident client and server
 
