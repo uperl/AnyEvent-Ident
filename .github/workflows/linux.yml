@@ -35,6 +35,7 @@ jobs:
 
     env:
       CIP_TAG: ${{ matrix.cip_tag }}
+      CIP_TAG: TMPDIR=/home/cip/tmp
 
     steps:
       - uses: actions/checkout@v2
