@@ -33,13 +33,13 @@ use Carp qw( croak carp );
 
 =head1 DESCRIPTION
 
-Provide a simple asynchronous ident server.  This class manages 
-connections and handles client errors for you, but you have to provide 
-an implementation which determines the owner for a connection given a 
-server and client port. This class may also be useful for testing ident 
-clients against (see the test suite in this distribution, it uses this 
-class to test L<AnyEvent::Ident::Client>), or for constructing an ident 
-server which always returns the same user (which may be useful for some 
+Provide a simple asynchronous ident server.  This class manages
+connections and handles client errors for you, but you have to provide
+an implementation which determines the owner for a connection given a
+server and client port. This class may also be useful for testing ident
+clients against (see the test suite in this distribution, it uses this
+class to test L<AnyEvent::Ident::Client>), or for constructing an ident
+server which always returns the same user (which may be useful for some
 applications, such as IRC).
 
 =head1 CONSTRUCTOR
@@ -81,7 +81,7 @@ sub new
   my $port  = $args->{port};
   $port = 113 unless defined $port;
   bless {
-    hostname => $args->{hostname},  
+    hostname => $args->{hostname},
     port     => $port,
     on_error => $args->{on_error} || sub { carp $_[0] },
     on_bind  => $args->{on_bind}  || sub { },
@@ -96,10 +96,10 @@ Start the Ident server.  The given callback will be called on each ident
 request (there may be multiple ident requests for each connection).  The
 first and only argument passed to the callback is the transaction, an
 instance of L<AnyEvent::Ident::Transaction>.  The most important attribute
-on the transaction object are C<res>, the response object (itself an instance of 
+on the transaction object are C<res>, the response object (itself an instance of
 L<AnyEvent::Ident::Transaction> with C<server_port> and C<client_port>
 attributes) and the most important methods on the transaction object are
-C<reply_with_user> and C<reply_with_error> which reply with a successful and 
+C<reply_with_user> and C<reply_with_error> which reply with a successful and
 error response respectively.
 
 =cut
@@ -107,9 +107,9 @@ error response respectively.
 sub start
 {
   my($self, $callback) = @_;
-  
+
   croak "already started" if $self->{guard};
-  
+
   my $cb = sub {
     my ($fh, $host, $port) = @_;
 
@@ -125,14 +125,14 @@ sub start
         $handle->destroy;
       },
     );
-    
+
     $handle->on_read(sub {
       $handle->push_read( line => sub {
         my($handle, $line) = @_;
         $line =~ s/\015?\012//g;
         my $req = eval { AnyEvent::Ident::Request->new($line) };
         return $handle->push_write("$line:ERROR:INVALID-PORT\015\012") if $@;
-        my $tx = bless { 
+        my $tx = bless {
           req            => $req,
           remote_port    => $port,
           local_port     => $self->{bindport},
@@ -152,7 +152,7 @@ sub start
     $self->{bindport} = $port;
     $self->{on_bind}->($self);
   };
-  
+
   $self;
 }
 

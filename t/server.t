@@ -4,7 +4,7 @@ use Test::More tests => 25;
 use AnyEvent::Ident::Client;
 use AnyEvent::Ident::Server;
 
-our $timeout = AnyEvent->timer( 
+our $timeout = AnyEvent->timer(
   after => 10,
   cb    => sub { diag "TIMEOUT"; exit },
 );
@@ -39,16 +39,16 @@ my $client = AnyEvent::Ident::Client->new( hostname => '127.0.0.1', port => $ser
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(400, 500, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok $res->is_success, 'is_success';
   is $res->username, 'grimlock', 'username = grimlock';
@@ -57,16 +57,16 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(1, 1, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'NO-USER', 'error_type = NO-USER';
@@ -74,16 +74,16 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(-1, -1, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'INVALID-PORT', 'error_type = INVALID-PORT';
@@ -91,16 +91,16 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(65536, 42, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'INVALID-PORT', 'error_type = INVALID-PORT';
@@ -108,22 +108,22 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(42, 65536, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'INVALID-PORT', 'error_type = INVALID-PORT';
 };
 
-eval { 
+eval {
   $server->stop;
   $bind = AnyEvent->condvar;
   $server->start(sub {
@@ -146,16 +146,16 @@ $client = AnyEvent::Ident::Client->new( hostname => '127.0.0.1', port => $server
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(999, 888, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok $res->is_success, 'is_success';
   is $res->username, 'grimlock', 'username = grimlock';
@@ -164,16 +164,16 @@ do {
 
 do {
   my $done = AnyEvent->condvar;
-  
+
   my $res;
-  
+
   $client->ident(400, 500, sub {
     $res = shift;
     $done->send;
   });
-  
+
   $done->recv;
-  
+
   isa_ok $res, 'AnyEvent::Ident::Response';
   ok !$res->is_success, '!is_success';
   is $res->error_type, 'NO-USER', 'error_type = NO-USER';

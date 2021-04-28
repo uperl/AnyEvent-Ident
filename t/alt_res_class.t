@@ -4,7 +4,7 @@ use Test::More tests => 7;
 use AnyEvent::Ident::Client;
 use AnyEvent::Ident::Server;
 
-our $timeout = AnyEvent->timer( 
+our $timeout = AnyEvent->timer(
   after => 10,
   cb    => sub { diag "TIMEOUT"; exit },
 );
@@ -37,13 +37,13 @@ my $client = AnyEvent::Ident::Client->new(
 )->ident(1,2, sub {
   my $res = shift;
 
-  isa_ok $res, 'Foo::Bar::Baz';  
+  isa_ok $res, 'Foo::Bar::Baz';
   ok $res->is_success, 'is_success';
   is $res->username,   'grimlock', ' username = grimlock ';
   is $res->os,         'UNIX',     ' os       = UNIX ';
   is eval { $res->answer }, 42,    ' answer   = 42 ';
   diag $@ if $@;
-  
+
   $done->send;
 });
 
@@ -52,6 +52,6 @@ $done->recv;
 package
   Foo::Bar::Baz;
 
-BEGIN { our @ISA = qw( AnyEvent::Ident::Response ) }
+use base qw( AnyEvent::Ident::Response );
 
 sub answer { 42 }

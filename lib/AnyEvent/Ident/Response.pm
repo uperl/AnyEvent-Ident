@@ -16,12 +16,12 @@ sub new
     $raw =~ s/\s+$//;
     my ($pair, @list) = split /\s*:\s*/, $raw;
     my($server_port, $client_port) = split /\s*,\s*/, $pair;
-    my $self = bless { 
+    my $self = bless {
       raw => $raw,
       server_port => $server_port,
       client_port => $client_port
     }, $class;
-  
+
     if($list[0] eq 'USERID')
     {
       shift @list;
@@ -34,7 +34,7 @@ sub new
       shift @list;
       $self->{error_type} = shift @list;
     }
-  
+
     return $self;
   }
   else
